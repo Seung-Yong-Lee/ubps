@@ -1,258 +1,107 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[6]:
+# In[ ]:
 
 
-# 합본
+#10주차
+
+
+# In[3]:
+
+
+import geopandas as gpd
+from shapely.geometry import Point
+import folium
+from IPython.display import IFrame
+import pandas as pd
+
+# 데이터 프레임 생성
+data = pd.DataFrame({
+    'City': ['여의도', '여의나루', '국회의사당', '샛강'],
+    'Latitude': [37.52158, 37.52715, 37.52811, 37.51706062],
+    'Longitude': [126.9243, 126.9328, 126.9179, 126.9289]
+
+})
+
+# 데이터 프레임을 GeoDataFrame으로 변환
+geometry = [Point(xy) for xy in zip(data['Longitude'], data['Latitude'])]
+gdf = gpd.GeoDataFrame(data, geometry=geometry, crs='epsg:4326')
+
+# 여의도의 중심 좌표를 사용하여 지도 초기화
+center = [37.52158, 126.9243]
+m = folium.Map(location=center, zoom_start=15)
+
+# GeoDataFrame의 지점을 지도에 추가
+for idx, row in gdf.iterrows():
+    folium.Marker([row['Latitude'], row['Longitude']], popup=row['City']).add_to(m)
+
+# 좌표계를 EPSG:4326(WGS84)로 변환
+gdf = gdf.to_crs('epsg:4326')  
+
+# GeoDataFrame에 버퍼 열 추가 (단위: 미터)
+buffer_distance_meters = 0.003
+gdf['Buffer'] = gdf['geometry'].buffer(buffer_distance_meters)
+
+# GeoDataFrame의 버퍼를 지도에 추가
+for idx, row in gdf.iterrows():
+    # 색상을 빨간색으로 지정
+    folium.GeoJson(row['Buffer'].__geo_interface__,
+                   style_function=lambda x: {'fillColor': 'red'}).add_to(m)
+
+# Save the map as an HTML file
+html_file_path = 'map_with_red_buffer.html'
+m.save(html_file_path)
+
+# Display the HTML file in the notebook using IFrame
+IFrame(html_file_path, width=800, height=500)
+
+
+# In[1]:
+
 
 import pandas as pd
-from dash import Dash, dcc, html, Input, Output, State
+import pydeck as pdk
 
-import plotly.graph_objects as go
-from plotly.subplots import make_subplots
+data = {
+    'X': [126.9139175, 126.9213333, 126.92453, 126.9187012, 126.9170227, 126.9205093, 126.9180222, 126.9319, 126.9278336, 126.9189529, 126.9208374, 126.934906, 126.9303665, 126.9258347, 126.9260483, 126.9377899, 126.9375992, 126.9333725, 126.9323654, 126.9296188, 126.9284134, 126.9242096, 126.9361191, 126.9121628, 126.9271011, 126.9216156, 126.912674, 126.914299, 126.9224548, 126.9344864, 126.9396591, 126.9140472, 126.9131699, 126.9128952, 126.9181747, 126.9174728, 126.9151077, 126.9179916, 126.9271164, 126.9230118, 126.9240799, 126.9234238, 126.9304581],
+    'Y': [37.52841568, 37.53123856, 37.52881622, 37.5280571, 37.52816391, 37.52626419, 37.52466583, 37.52715683, 37.52461243, 37.52190781, 37.5230217, 37.52483749, 37.52207947, 37.52069473, 37.5193634, 37.52267456, 37.51943588, 37.51913071, 37.5200882, 37.51758575, 37.51776505, 37.53105545, 37.52434921, 37.53365707, 37.52234268, 37.51896286, 37.52863693, 37.52750778, 37.53179169, 37.51850891, 37.52070999, 37.5325737, 37.52974701, 37.53050232, 37.53054047, 37.53214645, 37.52864075, 37.53271866, 37.52347946, 37.52260971, 37.52508926, 37.52464294, 37.52539444],
+    '이용합계': [162, 1763, 5103, 2862, 1368, 2226, 3362, 9469, 3534, 3159, 2018, 1426, 4156, 3192, 2035, 1828, 4318, 1426, 2591, 2510, 3019, 1217, 2614, 669, 2402, 633, 239, 776, 372, 996, 3031, 606, 663, 416, 583, 386, 225, 317, 1011, 1697, 5638, 1810, 1980],
+    '대여건수': [89, 883, 2550, 1434, 687, 1112, 1805, 4947, 1691, 1825, 1046, 696, 2075, 1593, 1080, 927, 2059, 768, 1305, 1360, 1655, 609, 1269, 346, 1207, 380, 122, 488, 185, 506, 1469, 354, 331, 208, 324, 227, 132, 163, 507, 858, 2789, 903, 985],
+    '반납건수': [73, 880, 2553, 1428, 681, 1114, 1557, 4522, 1843, 1334, 972, 730, 2081, 1599, 955, 901, 2259, 658, 1286, 1150, 1364, 608, 1345, 323, 1195, 253, 117, 288, 187, 490, 1562, 252, 332, 208, 259, 159, 93, 154, 504, 839, 2849, 907, 995]
+}
 
+df = pd.DataFrame(data)
 
-df_cov = pd.read_csv('D:/disease_COVID19.csv')
-df_cov
-
-
-df_disease = pd.concat([pd.read_csv('D:/disease_ARI.csv'),
-                        pd.read_csv('D:/disease_influenza.csv'),
-                        pd.read_csv('D:/disease_SP.csv')])
-
-#df_cov = pd.read_csv('D:/disease_COVID19.csv')
-
-df_disease
-
-# radioitems value
-button = ['Acute Respiratory Infection', 'Influenza', 'Streptococcus Pneumoniae']
-
-# App structure
-app = Dash(__name__)
-app.title = ('Dashboard | COVID-19 & Respiratory Disease Data')
-server = app.server
-
-# App layout
-app.layout = html.Div([
+# PyDeck HexagonLayer with '반납건수' as weight
+layer = pdk.Layer(
+    'HexagonLayer',
+    data=df,
+    get_position='[X, Y]',
+    get_weight='반납건수',  # Using '반납건수' as weight
+    elevation_scale=10,
+    radius=275,
+    extruded=True,
+    coverage=1,
+    opacity=0.9,
+    color_range=[[255, 255, 178], [254, 204, 92], [253, 141, 60]], 
     
-    # Main Title
-    html.H2('Impact of COVID-19 Pandamic on Occurence Trends of Resiratory Disease in Korea',
-           style = {'textAlign': 'center'}
-           ),
-    
-    # 탭 영역 설정
-    dcc.Tabs([
-        # tab 1
-        dcc.Tab(label = 'Dashboard',
-                style = {'padding': '3px', 'fontWeight': 'bold',
-                         'borderBottom': '1px solid #d6d6d6'},
-                selected_style = {'padding': '3px', 'backgroundColor': '#119DFF', 'color': 'white',
-                                  'borderBottom': '1px solid #d6d6d6', 'borderTop': '1px solid #d6d6d6'},
-                children = [
-                   html.Div([
-                       html.P(children = 'Disease Type: '),
-                       dcc.RadioItems(id = 'radio',
-                                      options = [{'label': i, 'value':i} for i in button],
-                                      value = 'Acute Respiratory Infection',
-                                      labelStyle = {'display': 'block'})
-                   ]),
-                   dcc.Graph(id = 'graph', 
-                             style = {'width': '95%',
-                                     'height': 650,
-                                     'margin-left': 'auto',
-                                     'margin-right': 0})
-               ]),
-        # tab 2
-        dcc.Tab(label = 'Upload',
-                style = {'padding': '3px', 'fontWeight': 'bold',
-                         'borderBottom': '1px solid #d6d6d6'},
-                selected_style = {'padding': '3px', 'backgroundColor': '#119DFF', 'color': 'white',
-                                  'borderBottom': '1px solid #d6d6d6', 'borderTop': '1px solid #d6d6d6'},
-                children = [
-                    
-                    html.Div([
-                        html.Div([
-                            dcc.Upload(id = 'up1',
-                                       children = html.Div('Upload: COVID19'),
-                                       style = {'width': '15%', 'height': '30px',
-                                                'lineHeight': '30px', 'borderWidth': '1px',
-                                                'borderStyle': 'dashed', 'borderRadius': '2px',
-                                                'textAlign': 'center', 'float': 'left', 'display': 'inline-block'})
-                        ]),
-                        html.Div([
-                            dcc.Upload(id = 'up2',
-                                       children = html.Div('Upload: Disease'),
-                                       style = {'width': '15%', 'height': '30px',
-                                                'lineHeight': '30px', 'borderWidth': '1px',
-                                                'borderStyle': 'dashed', 'borderRadius': '2px',
-                                                'textAlign': 'center', 'float': 'left', 'display': 'inline-block'})
-                        ])
-                    ], style = {'width': '75%', 'overflow':'hidden'}), # hidden: 영역에 맞춰 나머지는 숨김처리
-                    
-                    dcc.Graph(id = 'auto', 
-                              style = {'width': '95%', 
-                                       'height': 650, 
-                                       'margin-left': 'auto', 
-                                       'margin-right':0})
-                    # 그래프 높이를 layout에서 설정하기, callback에서 설정하면 tab 이동시 초기화됨
-                ])
-    ])
-])
+   # get_fill_color='[[255, 0, 0, 150,], [255, 255, 178], [254, 204, 92], [253, 141, 60], [240, 59, 32]]',  # Red color with alpha
+)
+   #  color_range=[[255, 255, 178], [254, 204, 92], [253, 141, 60], [240, 59, 32]],# Set the viewport
 
-# Dashboard - graph Callback
-@app.callback(Output('graph', 'figure'),
-              Input('radio', 'value'))
+# Set the viewport
+view_state = pdk.ViewState(
+    latitude=df['Y'].mean(),
+    longitude=df['X'].mean(),
+    zoom=10,
+    pitch=25,
+    bearing=-25
+)
 
-def update_radio(val):
-    
-    # Create figure with secondary y-axis
-    fig = make_subplots(specs = [[{'secondary_y': True}]])
-    
-    # Bar Chart 1
-    dis = df_cov['distance'].unique().tolist()
-    col = ['#4088DA', '#89DEDF', '#FFB011', '#FC7001', '#E60000']
-    
-    # Loop - Distance
-    for i in range(len(dis)):
-        cov = df_cov[df_cov['distance'] == dis[i]]
-        
-        fig.add_trace(go.Bar(x = cov['week'],
-                             y = cov['value'],
-                             text = cov['distance'],
-                             name = dis[i],
-                             hovertemplate = '<b>2020</b><br>Week: %{x}<br>Distance: %{text}<br>Confirmed: %{y:,}',
-                             hoverlabel_font_color = 'rgb(255,255,255)',
-                             textposition = 'none',
-                             marker_color = col[i]),
-                      secondary_y = False)
-        
-    fig.update_layout(go.Layout(xaxis = dict(title = 'Time (week)',
-                                             dtick = 1, tickangle = 0),
-                                yaxis = dict(title = 'Cumulative Number of Confirmed Cases',
-                                             tickformat = ',', showgrid = False),
-                                legend = dict(orientation = 'h', 
-                                              yanchor = 'top',
-                                              y = 1.1,
-                                              traceorder = 'normal')))
+# Create a PyDeck deck
+deck = pdk.Deck(layers=[layer], initial_view_state=view_state)
 
-    # Line Chart
-    yr = df_disease['year'].unique().tolist()
-    line = ['dash', 'dot', 'solid']
-    
-    for i in range(len(yr)):
-        df = df_disease[(df_disease['disease'] == val) & (df_disease['year'] == yr[i])]
-        
-        fig.add_trace(go.Scatter(x = df['week'],
-                                 y = df['value'],
-                                 text = df['year'],
-                                 name = yr[i],
-                                 hovertemplate = '<b>%{text}</b><br>Week: %{x}<br>Patient: %{y:,}',
-                                 mode = 'lines',
-                                 line = {'dash': line[i], 'color':'black', 'width': 1}),
-                      secondary_y = True)
-    
-    # 보조축 title
-    fig.update_yaxes(title_text = 'Number of Case(' + val + ')', tickformat = ',', secondary_y = True)
-    
-    return fig
-
-import io
-import base64
-
-# 데이터 업로드시 파일이름이 base64로 인코딩되므로 이를 디코딩하는 함수 설정
-def process_content(contents):
-    type, data = contents.split(',')
-    decoded = base64.b64decode(data)
-    return decoded
-
-# Upload - Graph Callback
-@app.callback(Output('auto', 'figure'),
-              [Input('up1', 'contents'), Input('up2', 'contents')])
-
-def update_files(content1, content2):
-    
-    # create figure with secondary y-axis
-    fig = make_subplots(specs = [[{'secondary_y': True}]])
-    
-    # upload data 처리
-    data1 = process_content(content1)
-    up_cov = pd.read_csv(io.StringIO(data1.decode('utf-8'))) # io.StringIO: 문자열을 파일형식으로 변경
-    
-    # settings
-    dis = up_cov['distance'].unique().tolist()
-    col = ['#4088DA', '#89DEDF', '#FFB011', '#FC7001', '#E60000']
-    
-    # Loop - Distance
-    for i in range(len(dis)):
-        cov = up_cov[up_cov['distance'] == dis[i]]
-        
-        fig.add_trace(go.Bar(x = cov['week'],
-                             y = cov['value'],
-                             text = cov['distance'],
-                             name = dis[i],
-                             hovertemplate = '<b>2020</b><br>Week: %{x}<br>Distance: %{text}<br>Confirmed: %{y:,}',
-                             hoverlabel_font_color = 'rgb(255,255,255)',
-                             textposition = 'none',
-                             marker_color = col[i]),
-                      secondary_y = False)
-        
-    fig.update_layout(go.Layout(xaxis = dict(title = 'Time (week)',
-                                             dtick = 1, tickangle = 0),
-                                yaxis = dict(title = 'Cumulative Number of Confirmed Cases',
-                                             tickformat = ',', showgrid = False),
-                                legend = dict(orientation = 'h', 
-                                              yanchor = 'top',
-                                              y = 1.1,
-                                              traceorder = 'normal')))
-    
-    if content2 != None:
-        # upload data 처리 - 호흡기 질환 데이터
-        data2 = process_content(content2)
-        up_dis = pd.read_csv(io.StringIO(data2.decode('utf-8')))
-        
-        # Line Chart
-        yr = up_dis['year'].unique().tolist()
-        dis_nm = up_dis['disease'].unique().tolist()[0]
-        line = ['dash', 'dot', 'solid']
-
-        for i in range(len(yr)):
-            df = up_dis[(up_dis['year'] == yr[i])]
-
-            fig.add_trace(go.Scatter(x = df['week'],
-                                     y = df['value'],
-                                     text = df['year'],
-                                     name = yr[i],
-                                     hovertemplate = '<b>%{text}</b><br>Week: %{x}<br>Patient: %{y:,}',
-                                     mode = 'lines',
-                                     line = {'dash': line[i], 'color':'black', 'width': 1}),
-                          secondary_y = True)
-
-        # 보조축 title
-        fig.update_yaxes(title_text = 'Number of Case(' + dis_nm + ')', tickformat = ',', secondary_y = True)
-
-    return fig
-
-
-
-# In[8]:
-
-
-# Run App
-if __name__ == '__main__':
-    app.run_server(debug = False, port=8055)
-
-
-# In[2]:
-
-
-get_ipython().system(' pip install gunicorn')
-
-
-# In[4]:
-
-
-get_ipython().system(' pip freeze')
-
-get_ipython().system(' conda list')
+# Show the deck
+deck.to_html('weighted_map_return_count_pydeck.html', iframe_width=800, iframe_height=500)
 
