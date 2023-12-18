@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title>pydeck</title>
+        <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <script src='https://cdn.jsdelivr.net/npm/@deck.gl/jupyter-widget@~8.8.*/dist/index.js'></script>
+    <style>
+    body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+#deck-container {
+  width: 100vw;
+  height: 100vh;
+}
+
+#deck-container canvas {
+  z-index: 1;
+  background: none;
+}
+    </style>
+  </head>
+  <body>
+    <div id="deck-container">
+    </div>
+  </body>
+  <script>
+    const container = document.getElementById('deck-container');
+    const jsonInput = {
+  "htmlTitle": "<h3 align=\"center\" style=\"font-size:16px\"><b>PyDeck \uc9c0\ub3c4 \uc608\uc81c - \ud558\ucc28\uc2b9\uac1d\uc218 \uae30\uc900</b></h3>",
+  "initialViewState": {
+    "bearing": -200,
+    "latitude": 37.5235275,
+    "longitude": 126.92585,
+    "pitch": 15,
+    "zoom": 10
+  },
+  "layers": [
+    {
+      "@@type": "HexagonLayer",
+      "colorRange": [
+        [
+          255,
+          255,
+          178
+        ],
+        [
+          254,
+          204,
+          92
+        ],
+        [
+          253,
+          141,
+          60
+        ]
+      ],
+      "coverage": 1,
+      "data": [
+        {
+          "X": 126.9243,
+          "Y": 37.52158,
+          "\uc2b9\ucc28\uc2b9\uac1d\uc218": 1571550,
+          "\uc774\uc6a9\ud569\uacc4": 3171175,
+          "\ud558\ucc28\uc2b9\uac1d\uc218": 1599625
+        },
+        {
+          "X": 126.9328,
+          "Y": 37.52715,
+          "\uc2b9\ucc28\uc2b9\uac1d\uc218": 439038,
+          "\uc774\uc6a9\ud569\uacc4": 923672,
+          "\ud558\ucc28\uc2b9\uac1d\uc218": 484634
+        },
+        {
+          "X": 126.9179,
+          "Y": 37.52811,
+          "\uc2b9\ucc28\uc2b9\uac1d\uc218": 448979,
+          "\uc774\uc6a9\ud569\uacc4": 912157,
+          "\ud558\ucc28\uc2b9\uac1d\uc218": 463178
+        },
+        {
+          "X": 126.9284,
+          "Y": 37.51727,
+          "\uc2b9\ucc28\uc2b9\uac1d\uc218": 256975,
+          "\uc774\uc6a9\ud569\uacc4": 525694,
+          "\ud558\ucc28\uc2b9\uac1d\uc218": 268719
+        }
+      ],
+      "elevationScale": 10,
+      "extruded": true,
+      "getPosition": "@@=[X, Y]",
+      "getWeight": "@@=\ud558\ucc28\uc2b9\uac1d\uc218",
+      "id": "6e687cb1-f0c5-4edf-9d13-439db7adbeae",
+      "opacity": 0.5,
+      "radius": 549
+    }
+  ],
+  "mapProvider": "carto",
+  "mapStyle": "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
+  "views": [
+    {
+      "@@type": "MapView",
+      "controller": true
+    }
+  ]
+};
+    const tooltip = true;
+    const customLibraries = null;
+    const configuration = null;
+
+    const deckInstance = createDeck({
+                  container,
+      jsonInput,
+      tooltip,
+      customLibraries,
+      configuration
+    });
+
+  </script>
+</html>

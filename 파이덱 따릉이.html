@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title>pydeck</title>
+        <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <script src='https://cdn.jsdelivr.net/npm/@deck.gl/jupyter-widget@~8.8.*/dist/index.js'></script>
+    <style>
+    body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+#deck-container {
+  width: 100vw;
+  height: 100vh;
+}
+
+#deck-container canvas {
+  z-index: 1;
+  background: none;
+}
+    </style>
+  </head>
+  <body>
+    <div id="deck-container">
+    </div>
+  </body>
+  <script>
+    const container = document.getElementById('deck-container');
+    const jsonInput = {
+  "htmlTitle": "<h3 align=\"center\" style=\"font-size:16px\"><b>\uc5ec\uc758\ub3c4 \ub0b4 \ub530\ub989\uc774 \uc774\uc6a9\uac1d\uc218</b></h3>",
+  "initialViewState": {
+    "bearing": -25,
+    "latitude": 37.52538565674418,
+    "longitude": 126.92399082325579,
+    "pitch": 25,
+    "zoom": 10
+  },
+  "layers": [
+    {
+      "@@type": "HexagonLayer",
+      "colorRange": [
+        [
+          255,
+          255,
+          178
+        ],
+        [
+          254,
+          204,
+          92
+        ],
+        [
+          253,
+          141,
+          60
+        ]
+      ],
+      "coverage": 1,
+      "data": [
+        {
+          "X": 126.9139175,
+          "Y": 37.52841568,
+          "\ub300\uc5ec\uac74\uc218": 89,
+          "\ubc18\ub0a9\uac74\uc218": 73,
+          "\uc774\uc6a9\ud569\uacc4": 162
+        },
+        {
+          "X": 126.9213333,
+          "Y": 37.53123856,
+          "\ub300\uc5ec\uac74\uc218": 883,
+          "\ubc18\ub0a9\uac74\uc218": 880,
+          "\uc774\uc6a9\ud569\uacc4": 1763
+        },
+        {
+          "X": 126.92453,
+          "Y": 37.52881622,
+          "\ub300\uc5ec\uac74\uc218": 2550,
+          "\ubc18\ub0a9\uac74\uc218": 2553,
+          "\uc774\uc6a9\ud569\uacc4": 5103
+        },
+        {
+          "X": 126.9187012,
+          "Y": 37.5280571,
+          "\ub300\uc5ec\uac74\uc218": 1434,
+          "\ubc18\ub0a9\uac74\uc218": 1428,
+          "\uc774\uc6a9\ud569\uacc4": 2862
+        },
+        {
+          "X": 126.9170227,
+          "Y": 37.52816391,
+          "\ub300\uc5ec\uac74\uc218": 687,
+          "\ubc18\ub0a9\uac74\uc218": 681,
+          "\uc774\uc6a9\ud569\uacc4": 1368
+        },
+        {
+          "X": 126.9205093,
+          "Y": 37.52626419,
+          "\ub300\uc5ec\uac74\uc218": 1112,
+          "\ubc18\ub0a9\uac74\uc218": 1114,
+          "\uc774\uc6a9\ud569\uacc4": 2226
+        },
+        {
+          "X": 126.9180222,
+          "Y": 37.52466583,
+          "\ub300\uc5ec\uac74\uc218": 1805,
+          "\ubc18\ub0a9\uac74\uc218": 1557,
+          "\uc774\uc6a9\ud569\uacc4": 3362
+        },
+        {
+          "X": 126.9319,
+          "Y": 37.52715683,
+          "\ub300\uc5ec\uac74\uc218": 4947,
+          "\ubc18\ub0a9\uac74\uc218": 4522,
+          "\uc774\uc6a9\ud569\uacc4": 9469
+        },
+        {
+          "X": 126.9278336,
+          "Y": 37.52461243,
+          "\ub300\uc5ec\uac74\uc218": 1691,
+          "\ubc18\ub0a9\uac74\uc218": 1843,
+          "\uc774\uc6a9\ud569\uacc4": 3534
+        },
+        {
+          "X": 126.9189529,
+          "Y": 37.52190781,
+          "\ub300\uc5ec\uac74\uc218": 1825,
+          "\ubc18\ub0a9\uac74\uc218": 1334,
+          "\uc774\uc6a9\ud569\uacc4": 3159
+        },
+        {
+          "X": 126.9208374,
+          "Y": 37.5230217,
+          "\ub300\uc5ec\uac74\uc218": 1046,
+          "\ubc18\ub0a9\uac74\uc218": 972,
+          "\uc774\uc6a9\ud569\uacc4": 2018
+        },
+        {
+          "X": 126.934906,
+          "Y": 37.52483749,
+          "\ub300\uc5ec\uac74\uc218": 696,
+          "\ubc18\ub0a9\uac74\uc218": 730,
+          "\uc774\uc6a9\ud569\uacc4": 1426
+        },
+        {
+          "X": 126.9303665,
+          "Y": 37.52207947,
+          "\ub300\uc5ec\uac74\uc218": 2075,
+          "\ubc18\ub0a9\uac74\uc218": 2081,
+          "\uc774\uc6a9\ud569\uacc4": 4156
+        },
+        {
+          "X": 126.9258347,
+          "Y": 37.52069473,
+          "\ub300\uc5ec\uac74\uc218": 1593,
+          "\ubc18\ub0a9\uac74\uc218": 1599,
+          "\uc774\uc6a9\ud569\uacc4": 3192
+        },
+        {
+          "X": 126.9260483,
+          "Y": 37.5193634,
+          "\ub300\uc5ec\uac74\uc218": 1080,
+          "\ubc18\ub0a9\uac74\uc218": 955,
+          "\uc774\uc6a9\ud569\uacc4": 2035
+        },
+        {
+          "X": 126.9377899,
+          "Y": 37.52267456,
+          "\ub300\uc5ec\uac74\uc218": 927,
+          "\ubc18\ub0a9\uac74\uc218": 901,
+          "\uc774\uc6a9\ud569\uacc4": 1828
+        },
+        {
+          "X": 126.9375992,
+          "Y": 37.51943588,
+          "\ub300\uc5ec\uac74\uc218": 2059,
+          "\ubc18\ub0a9\uac74\uc218": 2259,
+          "\uc774\uc6a9\ud569\uacc4": 4318
+        },
+        {
+          "X": 126.9333725,
+          "Y": 37.51913071,
+          "\ub300\uc5ec\uac74\uc218": 768,
+          "\ubc18\ub0a9\uac74\uc218": 658,
+          "\uc774\uc6a9\ud569\uacc4": 1426
+        },
+        {
+          "X": 126.9323654,
+          "Y": 37.5200882,
+          "\ub300\uc5ec\uac74\uc218": 1305,
+          "\ubc18\ub0a9\uac74\uc218": 1286,
+          "\uc774\uc6a9\ud569\uacc4": 2591
+        },
+        {
+          "X": 126.9296188,
+          "Y": 37.51758575,
+          "\ub300\uc5ec\uac74\uc218": 1360,
+          "\ubc18\ub0a9\uac74\uc218": 1150,
+          "\uc774\uc6a9\ud569\uacc4": 2510
+        },
+        {
+          "X": 126.9284134,
+          "Y": 37.51776505,
+          "\ub300\uc5ec\uac74\uc218": 1655,
+          "\ubc18\ub0a9\uac74\uc218": 1364,
+          "\uc774\uc6a9\ud569\uacc4": 3019
+        },
+        {
+          "X": 126.9242096,
+          "Y": 37.53105545,
+          "\ub300\uc5ec\uac74\uc218": 609,
+          "\ubc18\ub0a9\uac74\uc218": 608,
+          "\uc774\uc6a9\ud569\uacc4": 1217
+        },
+        {
+          "X": 126.9361191,
+          "Y": 37.52434921,
+          "\ub300\uc5ec\uac74\uc218": 1269,
+          "\ubc18\ub0a9\uac74\uc218": 1345,
+          "\uc774\uc6a9\ud569\uacc4": 2614
+        },
+        {
+          "X": 126.9121628,
+          "Y": 37.53365707,
+          "\ub300\uc5ec\uac74\uc218": 346,
+          "\ubc18\ub0a9\uac74\uc218": 323,
+          "\uc774\uc6a9\ud569\uacc4": 669
+        },
+        {
+          "X": 126.9271011,
+          "Y": 37.52234268,
+          "\ub300\uc5ec\uac74\uc218": 1207,
+          "\ubc18\ub0a9\uac74\uc218": 1195,
+          "\uc774\uc6a9\ud569\uacc4": 2402
+        },
+        {
+          "X": 126.9216156,
+          "Y": 37.51896286,
+          "\ub300\uc5ec\uac74\uc218": 380,
+          "\ubc18\ub0a9\uac74\uc218": 253,
+          "\uc774\uc6a9\ud569\uacc4": 633
+        },
+        {
+          "X": 126.912674,
+          "Y": 37.52863693,
+          "\ub300\uc5ec\uac74\uc218": 122,
+          "\ubc18\ub0a9\uac74\uc218": 117,
+          "\uc774\uc6a9\ud569\uacc4": 239
+        },
+        {
+          "X": 126.914299,
+          "Y": 37.52750778,
+          "\ub300\uc5ec\uac74\uc218": 488,
+          "\ubc18\ub0a9\uac74\uc218": 288,
+          "\uc774\uc6a9\ud569\uacc4": 776
+        },
+        {
+          "X": 126.9224548,
+          "Y": 37.53179169,
+          "\ub300\uc5ec\uac74\uc218": 185,
+          "\ubc18\ub0a9\uac74\uc218": 187,
+          "\uc774\uc6a9\ud569\uacc4": 372
+        },
+        {
+          "X": 126.9344864,
+          "Y": 37.51850891,
+          "\ub300\uc5ec\uac74\uc218": 506,
+          "\ubc18\ub0a9\uac74\uc218": 490,
+          "\uc774\uc6a9\ud569\uacc4": 996
+        },
+        {
+          "X": 126.9396591,
+          "Y": 37.52070999,
+          "\ub300\uc5ec\uac74\uc218": 1469,
+          "\ubc18\ub0a9\uac74\uc218": 1562,
+          "\uc774\uc6a9\ud569\uacc4": 3031
+        },
+        {
+          "X": 126.9140472,
+          "Y": 37.5325737,
+          "\ub300\uc5ec\uac74\uc218": 354,
+          "\ubc18\ub0a9\uac74\uc218": 252,
+          "\uc774\uc6a9\ud569\uacc4": 606
+        },
+        {
+          "X": 126.9131699,
+          "Y": 37.52974701,
+          "\ub300\uc5ec\uac74\uc218": 331,
+          "\ubc18\ub0a9\uac74\uc218": 332,
+          "\uc774\uc6a9\ud569\uacc4": 663
+        },
+        {
+          "X": 126.9128952,
+          "Y": 37.53050232,
+          "\ub300\uc5ec\uac74\uc218": 208,
+          "\ubc18\ub0a9\uac74\uc218": 208,
+          "\uc774\uc6a9\ud569\uacc4": 416
+        },
+        {
+          "X": 126.9181747,
+          "Y": 37.53054047,
+          "\ub300\uc5ec\uac74\uc218": 324,
+          "\ubc18\ub0a9\uac74\uc218": 259,
+          "\uc774\uc6a9\ud569\uacc4": 583
+        },
+        {
+          "X": 126.9174728,
+          "Y": 37.53214645,
+          "\ub300\uc5ec\uac74\uc218": 227,
+          "\ubc18\ub0a9\uac74\uc218": 159,
+          "\uc774\uc6a9\ud569\uacc4": 386
+        },
+        {
+          "X": 126.9151077,
+          "Y": 37.52864075,
+          "\ub300\uc5ec\uac74\uc218": 132,
+          "\ubc18\ub0a9\uac74\uc218": 93,
+          "\uc774\uc6a9\ud569\uacc4": 225
+        },
+        {
+          "X": 126.9179916,
+          "Y": 37.53271866,
+          "\ub300\uc5ec\uac74\uc218": 163,
+          "\ubc18\ub0a9\uac74\uc218": 154,
+          "\uc774\uc6a9\ud569\uacc4": 317
+        },
+        {
+          "X": 126.9271164,
+          "Y": 37.52347946,
+          "\ub300\uc5ec\uac74\uc218": 507,
+          "\ubc18\ub0a9\uac74\uc218": 504,
+          "\uc774\uc6a9\ud569\uacc4": 1011
+        },
+        {
+          "X": 126.9230118,
+          "Y": 37.52260971,
+          "\ub300\uc5ec\uac74\uc218": 858,
+          "\ubc18\ub0a9\uac74\uc218": 839,
+          "\uc774\uc6a9\ud569\uacc4": 1697
+        },
+        {
+          "X": 126.9240799,
+          "Y": 37.52508926,
+          "\ub300\uc5ec\uac74\uc218": 2789,
+          "\ubc18\ub0a9\uac74\uc218": 2849,
+          "\uc774\uc6a9\ud569\uacc4": 5638
+        },
+        {
+          "X": 126.9234238,
+          "Y": 37.52464294,
+          "\ub300\uc5ec\uac74\uc218": 903,
+          "\ubc18\ub0a9\uac74\uc218": 907,
+          "\uc774\uc6a9\ud569\uacc4": 1810
+        },
+        {
+          "X": 126.9304581,
+          "Y": 37.52539444,
+          "\ub300\uc5ec\uac74\uc218": 985,
+          "\ubc18\ub0a9\uac74\uc218": 995,
+          "\uc774\uc6a9\ud569\uacc4": 1980
+        }
+      ],
+      "elevationScale": 10,
+      "extruded": true,
+      "getPosition": "@@=[X, Y]",
+      "getWeight": "@@=\ubc18\ub0a9\uac74\uc218",
+      "id": "7c55b516-6d3f-4af1-af1f-301a44344416",
+      "opacity": 0.9,
+      "radius": 275
+    }
+  ],
+  "mapProvider": "carto",
+  "mapStyle": "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
+  "views": [
+    {
+      "@@type": "MapView",
+      "controller": true
+    }
+  ]
+};
+    const tooltip = true;
+    const customLibraries = null;
+    const configuration = null;
+
+    const deckInstance = createDeck({
+                  container,
+      jsonInput,
+      tooltip,
+      customLibraries,
+      configuration
+    });
+
+  </script>
+</html>
