@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_4d2252ed7faff11630d4e07937a55d74 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+    <script src="https://cdn.jsdelivr.net/gh/python-visualization/folium@main/folium/templates/leaflet_heat.min.js"></script>
+</head>
+<body>
+    
+    
+             <h3 align="center" style="font-size:16px"><b>공공자전거와 지하철의 이용합계 위치도</b></h3>
+             
+    
+    <div style="
+        position: fixed;
+        bottom: 50px; 
+        left: 50px;
+        z-index: 1000;
+        padding: 10px;
+        background-color: white;
+        border: 2px solid grey;
+        font-size: 14px;
+        ">
+        <p><b>공공자전거 정류소 - 상위 3개:</b></p>
+        <p>202번 국민일보 앞, 207번 여의나루역 1번출구 앞, 5854번 신한금융투자 앞</p>
+        <p><b>특징:</b></p>
+        <p>이용량 높은 공공자전거 정류소는 고정.</p>
+        <p>여의도 외곽보다 중심부에 위치.</p>
+        <p>일반상업지역으로 지정.</p>
+        <p>마포대교와 인접 혹은 이에 따라 생성된 대로변에 위치.</p>
+        <br>
+        <p><b>지하철 역 - 상위 1개:</b></p>
+        <p>여의도 역</p>
+        <p><b>특징:</b></p>
+        <p>여의도공원 및 여의도의 중심부에 위치.</p>
+        <p>인근에 증권 관련 기업과 기관 많음.</p>
+        <p>5호선과 9호선이 교차하는 교차역이자 환승역.</p>
+        <br>
+        <p><b>공통 특징:</b></p>
+        <p>모두 인구 수요를 발생시키는 요건에 해당하는 것.</p>
+        <p>날이 비교적 풀리는 3월부터 야외 활동이 증가함에 따라 이용량 증가.</p>
+        <br>
+        <p><b>*주의사항:</b></p>
+        <p>데이터 버튼을 빠르게 누를 시, 오류 발생. 3초 정도의 간격을 두고 누를 시 오류 발생 x.</p>
+    </div>
+    
+            <div class="folium-map" id="map_4d2252ed7faff11630d4e07937a55d74" ></div>
+        
+    
+             <h3 align="center" style="font-size:16px"><b>공공자전거와 지하철의 이용합계 위치도</b></h3>
+             
+    
+    <div style="
+        position: fixed;
+        bottom: 50px; 
+        left: 50px;
+        z-index: 1000;
+        padding: 10px;
+        background-color: white;
+        border: 2px solid grey;
+        font-size: 14px;
+        ">
+        <p><b>공공자전거 정류소 - 상위 3개:</b></p>
+        <p>202번 국민일보 앞, 207번 여의나루역 1번출구 앞, 5854번 신한금융투자 앞</p>
+        <p><b>특징:</b></p>
+        <p>이용량 높은 공공자전거 정류소는 고정.</p>
+        <p>여의도 외곽보다 중심부에 위치.</p>
+        <p>일반상업지역으로 지정.</p>
+        <p>마포대교와 인접 혹은 이에 따라 생성된 대로변에 위치.</p>
+        <br>
+        <p><b>지하철 역 - 상위 1개:</b></p>
+        <p>여의도 역</p>
+        <p><b>특징:</b></p>
+        <p>여의도공원 및 여의도의 중심부에 위치.</p>
+        <p>인근에 증권 관련 기업과 기관 많음.</p>
+        <p>5호선과 9호선이 교차하는 교차역이자 환승역.</p>
+        <br>
+        <p><b>공통 특징:</b></p>
+        <p>모두 인구 수요를 발생시키는 요건에 해당하는 것.</p>
+        <p>날이 비교적 풀리는 3월부터 야외 활동이 증가함에 따라 이용량 증가.</p>
+        <br>
+        <p><b>*주의사항:</b></p>
+        <p>데이터 버튼을 빠르게 누를 시, 오류 발생. 3초 정도의 간격을 두고 누를 시 오류 발생 x.</p>
+    </div>
+</body>
+<script>
+    
+    
+            var map_4d2252ed7faff11630d4e07937a55d74 = L.map(
+                "map_4d2252ed7faff11630d4e07937a55d74",
+                {
+                    center: [37.52538565674418, 126.92399082325579],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 13,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_58fc63ad062a5f4fe13debe7a45a15ce = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca target=\"_blank\" href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca target=\"_blank\" href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            );
+        
+    
+                tile_layer_58fc63ad062a5f4fe13debe7a45a15ce.addTo(map_4d2252ed7faff11630d4e07937a55d74);
+    
+            var heat_map_ef8a23eb7a6991987d08e95bda140810 = L.heatLayer(
+                [[37.52841568, 126.9139175], [37.53123856, 126.9213333], [37.52881622, 126.92453], [37.5280571, 126.9187012], [37.52816391, 126.9170227], [37.52626419, 126.9205093], [37.52466583, 126.9180222], [37.52715683, 126.9319], [37.52461243, 126.9278336], [37.52190781, 126.9189529], [37.5230217, 126.9208374], [37.52483749, 126.934906], [37.52207947, 126.9303665], [37.52069473, 126.9258347], [37.5193634, 126.9260483], [37.52267456, 126.9377899], [37.51943588, 126.9375992], [37.51913071, 126.9333725], [37.5200882, 126.9323654], [37.51758575, 126.9296188], [37.51776505, 126.9284134], [37.53105545, 126.9242096], [37.52434921, 126.9361191], [37.53365707, 126.9121628], [37.52234268, 126.9271011], [37.51896286, 126.9216156], [37.52863693, 126.912674], [37.52750778, 126.914299], [37.53179169, 126.9224548], [37.51850891, 126.9344864], [37.52070999, 126.9396591], [37.5325737, 126.9140472], [37.52974701, 126.9131699], [37.53050232, 126.9128952], [37.53054047, 126.9181747], [37.53214645, 126.9174728], [37.52864075, 126.9151077], [37.53271866, 126.9179916], [37.52347946, 126.9271164], [37.52260971, 126.9230118], [37.52508926, 126.9240799], [37.52464294, 126.9234238], [37.52539444, 126.9304581]],
+                {"blur": 15, "maxZoom": 18, "minOpacity": 0.5, "radius": 25}
+            );
+        
+    
+                heat_map_ef8a23eb7a6991987d08e95bda140810.addTo(map_4d2252ed7faff11630d4e07937a55d74);
+    
+            var heat_map_f5b0ca106baca43f66d56d021412315e = L.heatLayer(
+                [[37.52841568, 126.9139175], [37.53123856, 126.9213333], [37.52881622, 126.92453], [37.5280571, 126.9187012], [37.52816391, 126.9170227], [37.52626419, 126.9205093], [37.52466583, 126.9180222], [37.52715683, 126.9319], [37.52461243, 126.9278336], [37.52190781, 126.9189529], [37.5230217, 126.9208374], [37.52483749, 126.934906], [37.52207947, 126.9303665], [37.52069473, 126.9258347], [37.5193634, 126.9260483], [37.52267456, 126.9377899], [37.51943588, 126.9375992], [37.51913071, 126.9333725], [37.5200882, 126.9323654], [37.51758575, 126.9296188], [37.51776505, 126.9284134], [37.53105545, 126.9242096], [37.52434921, 126.9361191], [37.53365707, 126.9121628], [37.52234268, 126.9271011], [37.51896286, 126.9216156], [37.52863693, 126.912674], [37.52750778, 126.914299], [37.53179169, 126.9224548], [37.51850891, 126.9344864], [37.52070999, 126.9396591], [37.5325737, 126.9140472], [37.52974701, 126.9131699], [37.53050232, 126.9128952], [37.53054047, 126.9181747], [37.53214645, 126.9174728], [37.52864075, 126.9151077], [37.53271866, 126.9179916], [37.52347946, 126.9271164], [37.52260971, 126.9230118], [37.52508926, 126.9240799], [37.52464294, 126.9234238], [37.52539444, 126.9304581]],
+                {"blur": 15, "maxZoom": 18, "minOpacity": 0.5, "radius": 25}
+            );
+        
+    
+                heat_map_f5b0ca106baca43f66d56d021412315e.addTo(map_4d2252ed7faff11630d4e07937a55d74);
+</script>
+</html>
